@@ -1,13 +1,8 @@
 package com.hashirbaig.developer.textit.MainFragment;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -19,12 +14,10 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.hashirbaig.developer.textit.HostingActivities.ImageEditActivity;
-import com.hashirbaig.developer.textit.Model.BackgroundImage;
-import com.hashirbaig.developer.textit.Model.BackgroundsManager;
+import com.hashirbaig.developer.textit.Model.FilterImage;
+import com.hashirbaig.developer.textit.Model.FiltersManager;
 import com.hashirbaig.developer.textit.R;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
 public class BackgroundListFragment extends Fragment{
@@ -55,7 +48,7 @@ public class BackgroundListFragment extends Fragment{
 
     public void updateUI() {
         if(mAdapter == null) {
-            mAdapter = new PhotoAdapter(BackgroundsManager.get(getActivity()).getList());
+            mAdapter = new PhotoAdapter(FiltersManager.get(getActivity()).getList());
             mRecyclerView.setAdapter(mAdapter);
         } else {
             mAdapter.notifyDataSetChanged();
@@ -66,7 +59,7 @@ public class BackgroundListFragment extends Fragment{
                                     implements View.OnClickListener{
 
         private ImageView mImageView;
-        private BackgroundImage mImage;
+        private FilterImage mImage;
 
         public PhotoHolder(View v) {
             super(v);
@@ -74,7 +67,7 @@ public class BackgroundListFragment extends Fragment{
             v.setOnClickListener(this);
         }
 
-        public void bindImage(BackgroundImage image) {
+        public void bindImage(FilterImage image) {
             mImage = image;
             Glide.with(getActivity())
                     .load(Uri.parse(image.getFullPath()))
@@ -90,9 +83,9 @@ public class BackgroundListFragment extends Fragment{
 
     private class PhotoAdapter extends RecyclerView.Adapter<PhotoHolder> {
 
-        private List<BackgroundImage> mImages;
+        private List<FilterImage> mImages;
 
-        public PhotoAdapter(List<BackgroundImage> images) {
+        public PhotoAdapter(List<FilterImage> images) {
             mImages = images;
         }
 

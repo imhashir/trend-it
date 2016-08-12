@@ -20,7 +20,6 @@ import com.hashirbaig.developer.textit.R;
 public class ImageEditFragment extends Fragment{
 
     private DrawView mDrawView;
-    private Button mButtonNameDialog;
     private String mPath;
     private String mName;
 
@@ -43,34 +42,8 @@ public class ImageEditFragment extends Fragment{
         View v = inflater.inflate(R.layout.fragment_edit_image, container, false);
 
         mDrawView = (DrawView) v.findViewById(R.id.draw_view);
-        mButtonNameDialog = (Button) v.findViewById(R.id.button_enter_name_dialog);
-
         mDrawView.setImagePath(mPath);
-        mButtonNameDialog.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                EnterNameDialog dialog = EnterNameDialog.newInstance(mName);
-                dialog.setTargetFragment(ImageEditFragment.this, REQUEST_DIALOG_NAME);
-                dialog.show(fm, TAG_DIALOG_NAME);
-            }
-        });
 
         return v;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode != Activity.RESULT_OK) {
-            return;
-        }
-
-        switch (requestCode) {
-            case REQUEST_DIALOG_NAME:
-                mName = data.getStringExtra(EnterNameDialog.EXTRA_NAME);
-                mDrawView.setName(mName);
-                mDrawView.invalidate();
-                break;
-        }
     }
 }

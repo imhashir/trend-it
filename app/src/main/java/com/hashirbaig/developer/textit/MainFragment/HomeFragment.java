@@ -1,20 +1,22 @@
 package com.hashirbaig.developer.textit.MainFragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 
-import com.hashirbaig.developer.textit.HostingActivities.BackgroundListActivity;
+import com.hashirbaig.developer.textit.Dialogs.DialogChooseImage;
 import com.hashirbaig.developer.textit.R;
 
 public class HomeFragment extends Fragment{
 
-    private Button mBrowseButton;
+    private ImageView mBrowseButton;
+
+    private static final String TAG_IMAGE_CHOOSER = "image_chooser_dialog";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,13 +32,14 @@ public class HomeFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
-        mBrowseButton = (Button) v.findViewById(R.id.button_browse_backgrounds);
+        mBrowseButton = (ImageView) v.findViewById(R.id.create_your_image);
 
         mBrowseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = BackgroundListActivity.newIntent(getActivity());
-                startActivity(i);
+                FragmentManager fm = getActivity().getSupportFragmentManager();
+                DialogChooseImage dialog = DialogChooseImage.newInstance();
+                dialog.show(fm, TAG_IMAGE_CHOOSER);
             }
         });
 

@@ -1,12 +1,12 @@
 package com.hashirbaig.developer.textit.Model;
 
-public class BackgroundImage {
+public class FilterImage {
 
     private String mFullPath;
     private String mPath;
     private String mName;
 
-    public BackgroundImage(String path) {
+    public FilterImage(String path) {
         mPath = path;
         mFullPath = "file:///android_asset/" + path;
     }

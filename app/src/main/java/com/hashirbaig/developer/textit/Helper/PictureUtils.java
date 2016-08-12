@@ -6,17 +6,32 @@ import android.graphics.PointF;
 
 public class PictureUtils {
 
-    public static Bitmap getScaledBitmap(Bitmap bitmap, float destWidth, float destHeight) {
-        float ratio = 0;
-        if(bitmap.getWidth() > bitmap.getHeight()) {
-            ratio = bitmap.getWidth() / destWidth;
-        } else {
-            ratio = bitmap.getHeight() / destHeight;
-        }
-        int outWidth = (int) Math.floor(bitmap.getWidth() / ratio);
-        int outHeight = (int) Math.floor(bitmap.getHeight() / ratio);
+    public static final int SCALE_FILL = 1001;
+    public static final int SCALE_FIT = 1002;
 
-        return Bitmap.createScaledBitmap(bitmap, outWidth, outHeight, false);
+    public static Bitmap getScaledBitmap(Bitmap bitmap, int x, int y, float destWidth, float destHeight, int flag) {
+        float ratio = 0;
+        if(flag == SCALE_FIT) {
+            if (bitmap.getWidth() > bitmap.getHeight()) {
+                ratio = bitmap.getWidth() / destWidth;
+            } else {
+                ratio = bitmap.getHeight() / destHeight;
+            }
+            int outWidth = (int) Math.floor(bitmap.getWidth() / ratio);
+            int outHeight = (int) Math.floor(bitmap.getHeight() / ratio);
+            return Bitmap.createScaledBitmap(bitmap, outWidth, outHeight, false);
+        } else if(flag == SCALE_FILL){
+            if (bitmap.getWidth() < bitmap.getHeight()) {
+                ratio = bitmap.getWidth() / destWidth;
+            } else {
+                ratio = bitmap.getHeight() / destHeight;
+            }
+            int outWidth = (int) Math.floor(bitmap.getWidth() / ratio);
+            int outHeight = (int) Math.floor(bitmap.getHeight() / ratio);
+            Bitmap temp = Bitmap.createScaledBitmap(bitmap, outWidth, outHeight, false);
+            return Bitmap.createBitmap(temp, x, y, (int) destWidth, (int) destHeight);
+        }
+        return null;
     }
 
     public static PointF getBitmapPlace(Bitmap bitmap, float viewWidth, float viewHeight) {

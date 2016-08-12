@@ -5,4 +5,5 @@
     <string name="text_button_enter_name_dialog">Enter Name</string>
     <string name="dialog_enter_name_heading">Name:</string>
     <string name="text_your_name_here">Your Name Here</string>
+    <string name="text_choose_image">Choose Your Image</string>
 </resources>

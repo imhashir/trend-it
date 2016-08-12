@@ -18,6 +18,7 @@ import android.view.SurfaceView;
 
 import com.hashirbaig.developer.textit.Helper.PictureUtils;
 import com.hashirbaig.developer.textit.Helper.TextUtils;
+import com.hashirbaig.developer.textit.Model.UserData;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -29,25 +30,43 @@ public class DrawView extends SurfaceView{
     private Context mContext;
     private String mImagePath;
     private Canvas mCanvas, mViewCanvas;
-    private Bitmap mBitmap, mOriginalBitmap;
+    private Bitmap mBitmap, mOriginalBitmap, mUserBitmap;
     private String mName;
+
+    private PointF picturePoint;
 
     public DrawView(Context context) {
         super(context, null);
-        mContext = context;
-        setWillNotDraw(false);
+        init(context);
     }
 
     public DrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context);
+    }
+
+    public void init(Context context){
         mContext = context;
         setWillNotDraw(false);
+        picturePoint = new PointF(0, 0);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        return super.onTouchEvent(event);
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                if(mBitmap.getWidth() > mBitmap.getHeight()) {
+                    if(picturePoint.y >= 0 && picturePoint.y <= mUserBitmap.getWidth())
+                        picturePoint.y = event.getY();
+                } else {
+                    if(picturePoint.x >= 0 && picturePoint.x <= mUserBitmap.getHeight())
+                        picturePoint.x = event.getX();
+                }
+                invalidate();
+                break;
+        }
+        return true;
     }
 
     @Override
@@ -59,9 +78,12 @@ public class DrawView extends SurfaceView{
 
         if(mCanvas == null) {
             mOriginalBitmap = mBitmap;
-            mBitmap = PictureUtils.getScaledBitmap(mOriginalBitmap, getWidth(), getHeight());
+            mBitmap = PictureUtils.getScaledBitmap(mOriginalBitmap, 0, 0, getWidth(), getHeight(), PictureUtils.SCALE_FIT);
         }
-        mCanvas = new Canvas(mBitmap);
+        Bitmap userOriginalImage = BitmapFactory.decodeFile(UserData.get(mContext).getImagePath()).copy(Bitmap.Config.ARGB_8888, true);
+        mUserBitmap = PictureUtils.getScaledBitmap(userOriginalImage, (int)picturePoint.x, (int)picturePoint.y, mBitmap.getWidth(), mBitmap.getHeight(), PictureUtils.SCALE_FILL);
+
+        mCanvas = new Canvas(mUserBitmap);
 
         Log.i(TAG, "Canvas = " + mCanvas.getWidth() + "x" + mCanvas.getHeight());
         Log.i(TAG, "Bitmap = " + mBitmap.getWidth() + "x" + mBitmap.getHeight());
@@ -71,15 +93,9 @@ public class DrawView extends SurfaceView{
         paintImage.setFilterBitmap(true);
         paintImage.setDither(true);
         PointF placePoints = PictureUtils.getBitmapPlace(mBitmap, getWidth(), getHeight());
-        if (mName != null) {
-            Paint textPaint = new Paint();
-            textPaint.setTextSize(50);
-            textPaint.setColor(Color.WHITE);
-            textPaint.setStyle(Paint.Style.FILL);
-            PointF textPlace = TextUtils.getTextPlace(textPaint, mName, mBitmap);
-            mCanvas.drawText(mName, textPlace.x, textPlace.y, textPaint);
-        }
-        canvas.drawBitmap(mBitmap, placePoints.y, placePoints.x, paintImage);
+
+        mCanvas.drawBitmap(mBitmap, 0, 0, null);
+        canvas.drawBitmap(mUserBitmap, placePoints.y, placePoints.x, paintImage);
     }
 
     public void setImagePath(String path) {

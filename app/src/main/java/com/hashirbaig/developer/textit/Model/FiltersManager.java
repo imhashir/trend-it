@@ -8,17 +8,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BackgroundsManager {
+public class FiltersManager {
 
-    private List<BackgroundImage> mList;
-    private static BackgroundsManager sBackgroundsManager;
+    private List<FilterImage> mList;
+    private static FiltersManager sFiltersManager;
     private Context mContext;
 
     private final String TAG = "BackgroundManager";
 
     private static final String IMAGE_FOLDER = "background_images";
 
-    private BackgroundsManager(Context context) {
+    private FiltersManager(Context context) {
         mList = new ArrayList<>();
         mContext = context;
         loadImages();
@@ -36,25 +36,25 @@ public class BackgroundsManager {
 
         for(String name : imagesNames) {
             String path =  IMAGE_FOLDER + "/" + name;
-            BackgroundImage image = new BackgroundImage(path);
+            FilterImage image = new FilterImage(path);
             image.setName(name);
             mList.add(image);
             Log.i(TAG, path);
         }
     }
 
-    public static BackgroundsManager get(Context context) {
-        if(sBackgroundsManager == null) {
-            sBackgroundsManager = new BackgroundsManager(context);
+    public static FiltersManager get(Context context) {
+        if(sFiltersManager == null) {
+            sFiltersManager = new FiltersManager(context);
         }
-        return sBackgroundsManager;
+        return sFiltersManager;
     }
 
-    public void add(BackgroundImage image) {
+    public void add(FilterImage image) {
         mList.add(image);
     }
 
-    public List<BackgroundImage> getList() {
+    public List<FilterImage> getList() {
         return mList;
     }
 }
