@@ -57,10 +57,10 @@ public class DrawView extends SurfaceView{
         switch (event.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 if(mBitmap.getWidth() > mBitmap.getHeight()) {
-                    if(picturePoint.y >= 0 && picturePoint.y <= mUserBitmap.getWidth())
+                    if(event.getY() >= 0 && event.getY() <= mUserBitmap.getHeight())
                         picturePoint.y = event.getY();
                 } else {
-                    if(picturePoint.x >= 0 && picturePoint.x <= mUserBitmap.getHeight())
+                    if(event.getX() >= 0 && event.getX() <= mUserBitmap.getWidth())
                         picturePoint.x = event.getX();
                 }
                 invalidate();
