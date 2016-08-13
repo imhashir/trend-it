@@ -87,6 +87,7 @@ public class DrawView extends SurfaceView{
             mOriginalChanged = false;
         }
         mUserBitmap = PictureUtils.getScaledBitmap(mUserOriginalImage, (int)picturePoint.x, (int)picturePoint.y, mBitmap.getWidth(), mBitmap.getHeight(), PictureUtils.SCALE_FILL);
+        mUserBitmap = Bitmap.createBitmap(mUserBitmap, (int)picturePoint.x, (int)picturePoint.y, mBitmap.getWidth(), mBitmap.getHeight());
 
         mCanvas = new Canvas(mUserBitmap);
 

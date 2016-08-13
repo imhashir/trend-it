@@ -30,8 +30,8 @@ public class PictureUtils {
             int outWidth, outHeight;
 
             do {
-                outWidth = (int) Math.floor(bitmap.getWidth() / ratio);
-                outHeight = (int) Math.floor(bitmap.getHeight() / ratio);
+                outWidth = (int) Math.ceil(bitmap.getWidth() / ratio);
+                outHeight = (int) Math.ceil(bitmap.getHeight() / ratio);
 
                 if(outWidth < destWidth || outHeight < destHeight) {
                     ratio-=0.5;
@@ -39,7 +39,8 @@ public class PictureUtils {
             } while (outWidth < destWidth || outHeight < destHeight);
 
             Bitmap temp = Bitmap.createScaledBitmap(bitmap, outWidth, outHeight, false);
-            return Bitmap.createBitmap(temp, x, y, (int) destWidth, (int) destHeight);
+            return temp;
+            //return Bitmap.createBitmap(temp, x, y, (int) destWidth, (int) destHeight);
         }
         return null;
     }
