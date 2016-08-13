@@ -10,7 +10,7 @@ public class PictureUtils {
     public static final int SCALE_FIT = 1002;
 
     public static Bitmap getScaledBitmap(Bitmap bitmap, int x, int y, float destWidth, float destHeight, int flag) {
-        float ratio = 0;
+        float ratio;
         if(flag == SCALE_FIT) {
             if (bitmap.getWidth() > bitmap.getHeight()) {
                 ratio = bitmap.getWidth() / destWidth;
@@ -27,7 +27,7 @@ public class PictureUtils {
                 ratio = bitmap.getHeight() / destHeight;
             }
 
-            int outWidth = 0, outHeight = 0;
+            int outWidth, outHeight;
 
             do {
                 outWidth = (int) Math.floor(bitmap.getWidth() / ratio);

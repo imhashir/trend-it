@@ -11,11 +11,12 @@
         android:layout_height="wrap_content"
         android:text="@string/dialog_enter_name_heading"
         android:textStyle="bold"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dialog_user_name"/>
+        android:id="@+id/dialog_user_name"
+        android:inputType="text"/>
 
 </LinearLayout>
