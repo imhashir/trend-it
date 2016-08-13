@@ -11,6 +11,7 @@ import android.graphics.PointF;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
+import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -30,8 +31,11 @@ public class DrawView extends SurfaceView{
     private Context mContext;
     private String mImagePath;
     private Canvas mCanvas, mViewCanvas;
-    private Bitmap mBitmap, mOriginalBitmap, mUserBitmap;
+    private Bitmap mBitmap, mOriginalBitmap, mUserBitmap, mUserOriginalImage;
     private String mName;
+
+    public static final int ROTATE_LEFT = 501;
+    public static final int ROTATE_RIGHT = 502;
 
     private PointF picturePoint;
 
@@ -79,14 +83,15 @@ public class DrawView extends SurfaceView{
         if(mCanvas == null) {
             mOriginalBitmap = mBitmap;
             mBitmap = PictureUtils.getScaledBitmap(mOriginalBitmap, 0, 0, getWidth(), getHeight(), PictureUtils.SCALE_FIT);
+            mUserOriginalImage = BitmapFactory.decodeFile(UserData.get(mContext).getImagePath()).copy(Bitmap.Config.ARGB_8888, true);
         }
-        Bitmap userOriginalImage = BitmapFactory.decodeFile(UserData.get(mContext).getImagePath()).copy(Bitmap.Config.ARGB_8888, true);
-        mUserBitmap = PictureUtils.getScaledBitmap(userOriginalImage, (int)picturePoint.x, (int)picturePoint.y, mBitmap.getWidth(), mBitmap.getHeight(), PictureUtils.SCALE_FILL);
+        mUserBitmap = PictureUtils.getScaledBitmap(mUserOriginalImage, (int)picturePoint.x, (int)picturePoint.y, mBitmap.getWidth(), mBitmap.getHeight(), PictureUtils.SCALE_FILL);
 
         mCanvas = new Canvas(mUserBitmap);
 
         Log.i(TAG, "Canvas = " + mCanvas.getWidth() + "x" + mCanvas.getHeight());
-        Log.i(TAG, "Bitmap = " + mBitmap.getWidth() + "x" + mBitmap.getHeight());
+        Log.i(TAG, "FrameBitmap = " + mBitmap.getWidth() + "x" + mBitmap.getHeight());
+        Log.i(TAG, "UserBitmap = " + mUserBitmap.getWidth() + "x" + mUserBitmap.getHeight());
 
         Paint paintImage = new Paint();
         paintImage.setAntiAlias(true);
@@ -115,5 +120,13 @@ public class DrawView extends SurfaceView{
 
     public void setName(String name) {
         mName = name;
+    }
+
+    public Bitmap getUserOriginalImage() {
+        return mUserOriginalImage;
+    }
+
+    public void setUserOriginalImage(Bitmap userOriginalImage) {
+        mUserOriginalImage = userOriginalImage;
     }
 }

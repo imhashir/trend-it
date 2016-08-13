@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hashirbaig.developer.textit.HostingActivities.BackgroundListActivity;
@@ -47,18 +48,25 @@ public class DialogChooseImage extends DialogFragment{
             }
         });
 
-        return new AlertDialog.Builder(getActivity())
+        final AlertDialog dialog = new AlertDialog.Builder(getActivity())
                 .setView(v)
+                .setTitle(R.string.text_dialog_choose_image)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        UserData.get(getActivity()).setImagePath(mPath);
-                        Intent intent = BackgroundListActivity.newIntent(getActivity());
-                        startActivity(intent);
+                        if(mPath != null) {
+                            UserData.get(getActivity()).setImagePath(mPath);
+                            Intent intent = BackgroundListActivity.newIntent(getActivity());
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getActivity(), "No Image Selected", Toast.LENGTH_LONG).show();
+                        }
                     }
                 })
                 .setNegativeButton(android.R.string.cancel, null)
                 .create();
+
+        return dialog;
     }
 
     @Override

@@ -12,13 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.hashirbaig.developer.textit.Dialogs.EnterNameDialog;
+import com.hashirbaig.developer.textit.AsyncTasks.RotateImageAsync;
 import com.hashirbaig.developer.textit.Drawing.DrawView;
 import com.hashirbaig.developer.textit.HostingActivities.ImageEditActivity;
 import com.hashirbaig.developer.textit.R;
 
 public class ImageEditFragment extends Fragment{
 
+    private Button mRotateRight;
+    private Button mRotateLeft;
     private DrawView mDrawView;
     private String mPath;
     private String mName;
@@ -42,6 +44,23 @@ public class ImageEditFragment extends Fragment{
         View v = inflater.inflate(R.layout.fragment_edit_image, container, false);
 
         mDrawView = (DrawView) v.findViewById(R.id.draw_view);
+        mRotateRight = (Button) v.findViewById(R.id.button_rotate_right);
+        mRotateLeft = (Button) v.findViewById(R.id.button_rotate_left);
+
+        mRotateLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new RotateImageAsync().execute(DrawView.ROTATE_LEFT, mDrawView, mDrawView.getUserOriginalImage());
+            }
+        });
+
+        mRotateRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new RotateImageAsync().execute(DrawView.ROTATE_RIGHT, mDrawView, mDrawView.getUserOriginalImage());
+            }
+        });
+
         mDrawView.setImagePath(mPath);
 
         return v;
