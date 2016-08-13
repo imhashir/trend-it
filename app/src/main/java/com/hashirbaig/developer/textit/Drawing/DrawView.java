@@ -8,17 +8,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.os.AsyncTask;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
 import com.hashirbaig.developer.textit.Helper.PictureUtils;
-import com.hashirbaig.developer.textit.Helper.TextUtils;
 import com.hashirbaig.developer.textit.Model.UserData;
 
 import java.io.IOException;
@@ -33,6 +28,7 @@ public class DrawView extends SurfaceView{
     private Canvas mCanvas, mViewCanvas;
     private Bitmap mBitmap, mOriginalBitmap, mUserBitmap, mUserOriginalImage;
     private String mName;
+    private boolean mOriginalChanged;
 
     public static final int ROTATE_LEFT = 501;
     public static final int ROTATE_RIGHT = 502;
@@ -53,6 +49,7 @@ public class DrawView extends SurfaceView{
         mContext = context;
         setWillNotDraw(false);
         picturePoint = new PointF(0, 0);
+        mOriginalChanged = false;
     }
 
     @Override
@@ -61,10 +58,10 @@ public class DrawView extends SurfaceView{
         switch (event.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 if(mBitmap.getWidth() > mBitmap.getHeight()) {
-                    if(event.getY() >= 0 && event.getY() <= mUserBitmap.getHeight())
+                    if(event.getY() >= 0 && event.getY() < mUserBitmap.getHeight() && mCanvas.getHeight() != mUserBitmap.getHeight())
                         picturePoint.y = event.getY();
                 } else {
-                    if(event.getX() >= 0 && event.getX() <= mUserBitmap.getWidth())
+                    if(event.getX() >= 0 && event.getX() < mUserBitmap.getWidth() && mCanvas.getWidth() != mUserBitmap.getWidth())
                         picturePoint.x = event.getX();
                 }
                 invalidate();
@@ -84,6 +81,10 @@ public class DrawView extends SurfaceView{
             mOriginalBitmap = mBitmap;
             mBitmap = PictureUtils.getScaledBitmap(mOriginalBitmap, 0, 0, getWidth(), getHeight(), PictureUtils.SCALE_FIT);
             mUserOriginalImage = BitmapFactory.decodeFile(UserData.get(mContext).getImagePath()).copy(Bitmap.Config.ARGB_8888, true);
+        }
+        if(mOriginalChanged) {
+            picturePoint.set(0, 0);
+            mOriginalChanged = false;
         }
         mUserBitmap = PictureUtils.getScaledBitmap(mUserOriginalImage, (int)picturePoint.x, (int)picturePoint.y, mBitmap.getWidth(), mBitmap.getHeight(), PictureUtils.SCALE_FILL);
 
@@ -128,5 +129,6 @@ public class DrawView extends SurfaceView{
 
     public void setUserOriginalImage(Bitmap userOriginalImage) {
         mUserOriginalImage = userOriginalImage;
+        mOriginalChanged = true;
     }
 }
