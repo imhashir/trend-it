@@ -16,7 +16,6 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/dialog_user_name"
-        android:hint="@string/text_your_name_here"/>
+        android:id="@+id/dialog_user_name"/>
 
 </LinearLayout>

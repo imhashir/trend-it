@@ -6,6 +6,7 @@ public class UserData {
 
     private static UserData sUserData;
     private String mImagePath;
+    private String mImageName;
 
     private UserData(Context context) {
 
@@ -24,5 +25,9 @@ public class UserData {
 
     public void setImagePath(String imagePath) {
         mImagePath = imagePath;
+    }
+
+    public String getImageName() {
+        return mImageName;
     }
 }

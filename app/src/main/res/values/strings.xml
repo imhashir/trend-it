@@ -4,7 +4,7 @@
     <string name="button_browse_backgrounds_text">Browse Backgrounds</string>
     <string name="text_button_enter_name_dialog">Enter Name</string>
     <string name="dialog_enter_name_heading">Name:</string>
-    <string name="text_your_name_here">Your Name Here</string>
     <string name="text_choose_image">Choose Your Image</string>
     <string name="text_dialog_choose_image">Choose An Image</string>
+    <string name="menu_save_image">Save</string>
 </resources>

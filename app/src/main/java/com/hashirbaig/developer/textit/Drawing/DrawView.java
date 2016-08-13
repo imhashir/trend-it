@@ -58,10 +58,10 @@ public class DrawView extends SurfaceView{
         switch (event.getAction()) {
             case MotionEvent.ACTION_MOVE:
                 if(mBitmap.getWidth() > mBitmap.getHeight()) {
-                    if(event.getY() >= 0 && event.getY() < mUserBitmap.getHeight() && mCanvas.getHeight() != mUserBitmap.getHeight())
+                    if(event.getY() >= 0 && event.getY() < mUserBitmap.getHeight())
                         picturePoint.y = event.getY();
                 } else {
-                    if(event.getX() >= 0 && event.getX() < mUserBitmap.getWidth() && mCanvas.getWidth() != mUserBitmap.getWidth())
+                    if(event.getX() >= 0 && event.getX() < mUserBitmap.getWidth())
                         picturePoint.x = event.getX();
                 }
                 invalidate();
@@ -121,6 +121,14 @@ public class DrawView extends SurfaceView{
 
     public void setName(String name) {
         mName = name;
+    }
+
+    public Bitmap getUserBitmap() {
+        return mUserBitmap;
+    }
+
+    public void setUserBitmap(Bitmap userBitmap) {
+        mUserBitmap = userBitmap;
     }
 
     public Bitmap getUserOriginalImage() {
