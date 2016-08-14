@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
@@ -15,6 +16,8 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.hashirbaig.developer.textit.R;
+
+import java.io.File;
 
 public class EnterNameDialog extends DialogFragment{
 
@@ -33,7 +36,18 @@ public class EnterNameDialog extends DialogFragment{
         mTextField = (EditText) v.findViewById(R.id.dialog_user_name);
 
         if(passedName != null) {
-            mTextField.setText(passedName);
+
+            String folder = Environment.getExternalStorageDirectory() + "/TrendIt/";
+            String fileName = passedName;
+            File imageFile = null;
+            imageFile = new File(folder + passedName + ".jpg");
+            int x = 1;
+            while (imageFile.exists()) {
+                fileName = passedName + "(" + x++ + ")";
+                imageFile = new File(folder + fileName + ".jpg");
+            }
+            mTextField.setText(fileName);
+            mName = fileName;
         }
 
         mTextField.addTextChangedListener(new TextWatcher() {
@@ -64,6 +78,7 @@ public class EnterNameDialog extends DialogFragment{
                         getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, data);
                     }
                 })
+                .setNegativeButton(android.R.string.cancel, null)
                 .create();
     }
 

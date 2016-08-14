@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,12 +24,11 @@ import com.hashirbaig.developer.textit.R;
 
 public class ImageEditFragment extends Fragment{
 
-    private Button mRotateRight;
-    private Button mRotateLeft;
     private DrawView mDrawView;
     private String mPath;
     private String mName;
 
+    private static final String TAG = "ImageEditFragment";
     private static final String TAG_DIALOG_NAME = "enter_name_dialog_fragment";
     private static final int REQUEST_DIALOG_NAME = 1001;
 
@@ -49,23 +49,6 @@ public class ImageEditFragment extends Fragment{
         View v = inflater.inflate(R.layout.fragment_edit_image, container, false);
 
         mDrawView = (DrawView) v.findViewById(R.id.draw_view);
-        mRotateRight = (Button) v.findViewById(R.id.button_rotate_right);
-        mRotateLeft = (Button) v.findViewById(R.id.button_rotate_left);
-
-        mRotateLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new RotateImageAsync().execute(DrawView.ROTATE_LEFT, mDrawView, mDrawView.getUserOriginalImage());
-            }
-        });
-
-        mRotateRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new RotateImageAsync().execute(DrawView.ROTATE_RIGHT, mDrawView, mDrawView.getUserOriginalImage());
-            }
-        });
-
         mDrawView.setImagePath(mPath);
 
         return v;
@@ -78,13 +61,14 @@ public class ImageEditFragment extends Fragment{
     }
 
     private String getNameFromPath(String imagePath) {
-        return imagePath.substring(imagePath.lastIndexOf("/") + 1, imagePath.lastIndexOf(".") - 1);
+        return imagePath.substring(imagePath.lastIndexOf("/") + 1, imagePath.lastIndexOf("."));
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_save_image:
+                Log.i(TAG, "Save clicked");
                 FragmentManager fm = getActivity().getSupportFragmentManager();
                 EnterNameDialog dialog = EnterNameDialog.newInstance(getNameFromPath(mPath));
                 dialog.setTargetFragment(this, REQUEST_DIALOG_NAME);
@@ -103,7 +87,8 @@ public class ImageEditFragment extends Fragment{
         switch (requestCode) {
             case REQUEST_DIALOG_NAME:
                 mName = data.getStringExtra(EnterNameDialog.EXTRA_NAME);
-                new SaveImageAsync().execute(getActivity(), mName, mDrawView.getUserBitmap());
+                Log.i(TAG, "Save Name Set");
+                new SaveImageAsync().execute(getActivity(), mName, mDrawView.getFinalImage());
                 break;
         }
     }

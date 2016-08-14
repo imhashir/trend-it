@@ -7,6 +7,7 @@ public class UserData {
     private static UserData sUserData;
     private String mImagePath;
     private String mImageName;
+    private String mCroppedImagePath;
 
     private UserData(Context context) {
 
@@ -29,5 +30,13 @@ public class UserData {
 
     public String getImageName() {
         return mImageName;
+    }
+
+    public String getCroppedImagePath() {
+        return mCroppedImagePath;
+    }
+
+    public void setCroppedImagePath(String croppedImagePath) {
+        mCroppedImagePath = croppedImagePath;
     }
 }

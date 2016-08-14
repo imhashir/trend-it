@@ -12,7 +12,7 @@ public class PictureUtils {
     public static Bitmap getScaledBitmap(Bitmap bitmap, int x, int y, float destWidth, float destHeight, int flag) {
         float ratio;
         if(flag == SCALE_FIT) {
-            if (bitmap.getWidth() > bitmap.getHeight()) {
+            if (bitmap.getWidth() >= bitmap.getHeight()) {
                 ratio = bitmap.getWidth() / destWidth;
             } else {
                 ratio = bitmap.getHeight() / destHeight;
@@ -21,7 +21,7 @@ public class PictureUtils {
             int outHeight = (int) Math.floor(bitmap.getHeight() / ratio);
             return Bitmap.createScaledBitmap(bitmap, outWidth, outHeight, false);
         } else if(flag == SCALE_FILL){
-            if (bitmap.getWidth() < bitmap.getHeight()) {
+            if (bitmap.getWidth() <= bitmap.getHeight()) {
                 ratio = bitmap.getWidth() / destWidth;
             } else {
                 ratio = bitmap.getHeight() / destHeight;
@@ -40,7 +40,6 @@ public class PictureUtils {
 
             Bitmap temp = Bitmap.createScaledBitmap(bitmap, outWidth, outHeight, false);
             return temp;
-            //return Bitmap.createBitmap(temp, x, y, (int) destWidth, (int) destHeight);
         }
         return null;
     }

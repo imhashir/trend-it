@@ -34,16 +34,11 @@ public class SaveImageAsync extends AsyncTask<Object, Void, Void>{
         }
 
         File imageFile = new File(folder + mName + ext);
-        int x = 1;
-        while (imageFile.exists()) {
-            imageFile = new File(folder + mName + "(" + x + ")" + ext);
-            x++;
-        }
 
         FileOutputStream out = null;
 
         try {
-            out = new FileOutputStream(folder + mName + ext);
+            out = new FileOutputStream(imageFile.getPath());
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
             mSaved = true;
         } catch (FileNotFoundException e) {

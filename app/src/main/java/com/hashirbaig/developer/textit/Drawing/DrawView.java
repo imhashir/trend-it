@@ -25,7 +25,7 @@ public class DrawView extends SurfaceView{
 
     private Context mContext;
     private String mImagePath;
-    private Canvas mCanvas, mViewCanvas;
+    private Canvas mCanvas;
     private Bitmap mBitmap, mOriginalBitmap, mUserBitmap, mUserOriginalImage;
     private String mName;
     private boolean mOriginalChanged;
@@ -55,18 +55,6 @@ public class DrawView extends SurfaceView{
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_MOVE:
-                if(mBitmap.getWidth() > mBitmap.getHeight()) {
-                    if(event.getY() >= 0 && event.getY() < mUserBitmap.getHeight())
-                        picturePoint.y = event.getY();
-                } else {
-                    if(event.getX() >= 0 && event.getX() < mUserBitmap.getWidth())
-                        picturePoint.x = event.getX();
-                }
-                invalidate();
-                break;
-        }
         return true;
     }
 
@@ -80,14 +68,13 @@ public class DrawView extends SurfaceView{
         if(mCanvas == null) {
             mOriginalBitmap = mBitmap;
             mBitmap = PictureUtils.getScaledBitmap(mOriginalBitmap, 0, 0, getWidth(), getHeight(), PictureUtils.SCALE_FIT);
-            mUserOriginalImage = BitmapFactory.decodeFile(UserData.get(mContext).getImagePath()).copy(Bitmap.Config.ARGB_8888, true);
+            mUserOriginalImage = BitmapFactory.decodeFile(UserData.get(mContext).getCroppedImagePath()).copy(Bitmap.Config.ARGB_8888, true);
         }
         if(mOriginalChanged) {
             picturePoint.set(0, 0);
             mOriginalChanged = false;
         }
         mUserBitmap = PictureUtils.getScaledBitmap(mUserOriginalImage, (int)picturePoint.x, (int)picturePoint.y, mBitmap.getWidth(), mBitmap.getHeight(), PictureUtils.SCALE_FILL);
-        mUserBitmap = Bitmap.createBitmap(mUserBitmap, (int)picturePoint.x, (int)picturePoint.y, mBitmap.getWidth(), mBitmap.getHeight());
 
         mCanvas = new Canvas(mUserBitmap);
 
@@ -126,6 +113,15 @@ public class DrawView extends SurfaceView{
 
     public Bitmap getUserBitmap() {
         return mUserBitmap;
+    }
+
+    public Bitmap getFinalImage() {
+        Bitmap mHighResUserImage = null;
+        mHighResUserImage = PictureUtils.getScaledBitmap(mUserOriginalImage, 0, 0, mOriginalBitmap.getWidth(), mOriginalBitmap.getHeight(), PictureUtils.SCALE_FIT);
+
+        Canvas canvas = new Canvas(mHighResUserImage);
+        canvas.drawBitmap(mOriginalBitmap, 0, 0, null);
+        return mHighResUserImage;
     }
 
     public void setUserBitmap(Bitmap userBitmap) {
