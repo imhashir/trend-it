@@ -7,4 +7,26 @@
     <string name="text_choose_image">Choose Your Image</string>
     <string name="text_dialog_choose_image">Choose An Image</string>
     <string name="menu_save_image">Save</string>
+    <string name="menu_about_string">About</string>
+
+    <!-- About Fragment Strings -->
+    <string name="about_intro_title">Introduction</string>
+    <string name="about_intro_details">
+        Trend It is an image editing app aimed at providing public with image frames regarding latest events,
+        trends, functions or campaigns.
+    </string>
+    <string name="about_credits_title">Credits</string>
+    <string name="about_credits_details">
+        Main Developer: \n
+        \tHashir Baig\n\n
+
+        Frames by others: \n
+        \tUrainge: Campaign started by Ali Zafar\n
+
+        \nGuidance:
+        \n\tThe Big Nerd Ranch Guide (2nd Edition).
+        \n\tStackOverflow which has been opened hundreds of times while
+        developing this application.
+    </string>
+
 </resources>

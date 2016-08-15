@@ -21,12 +21,19 @@
 
         <activity android:name=".HostingActivities.BackgroundListActivity"/>
 
-        <activity android:name=".HostingActivities.ImageEditActivity"/>
+        <activity
+            android:name=".HostingActivities.ImageEditActivity"
+            android:parentActivityName=".HostingActivities.BackgroundListActivity"/>
 
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <activity
+            android:name=".HostingActivities.AboutActivity"
+            android:parentActivityName=".HostingActivities.HomeActivity"/>
+
     </application>
 
 </manifest>
