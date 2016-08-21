@@ -19,7 +19,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".HostingActivities.BackgroundListActivity"/>
+        <activity android:name=".HostingActivities.BackgroundListActivity"
+            android:theme="@style/AlbumListTheme"/>
 
         <activity
             android:name=".HostingActivities.ImageEditActivity"

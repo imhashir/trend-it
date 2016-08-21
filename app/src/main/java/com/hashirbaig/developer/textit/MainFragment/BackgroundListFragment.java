@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hashirbaig.developer.textit.HostingActivities.ImageEditActivity;
+import com.hashirbaig.developer.textit.Model.FilterAlbum;
 import com.hashirbaig.developer.textit.Model.FilterImage;
 import com.hashirbaig.developer.textit.Model.FiltersManager;
 import com.hashirbaig.developer.textit.Model.UserData;
@@ -66,11 +67,14 @@ public class BackgroundListFragment extends Fragment{
     }
 
     public void updateUI() {
-        if(mAdapter == null) {
-            mAdapter = new PhotoAdapter(FiltersManager.get(getActivity()).getList());
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            mAdapter.notifyDataSetChanged();
+        FilterAlbum currentAlbum = FiltersManager.get(getActivity()).getCurrentAlbum();
+        if(currentAlbum != null) {
+            if(mAdapter == null) {
+                mAdapter = new PhotoAdapter(FiltersManager.get(getActivity()).getFramesList());
+                mRecyclerView.setAdapter(mAdapter);
+            } else {
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 
