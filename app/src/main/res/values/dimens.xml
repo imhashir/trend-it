@@ -2,4 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Drawer View -->
+    <dimen name="navigation_list_ablum_name_size">20sp</dimen>
+    <dimen name="navigation_list_ablum_margins">5dp</dimen>
 </resources>

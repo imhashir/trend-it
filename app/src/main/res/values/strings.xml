@@ -9,6 +9,9 @@
     <string name="menu_save_image">Save</string>
     <string name="menu_about_string">About</string>
 
+    <string name="open_drawer_string">Open Navigation Drawer</string>
+    <string name="close_drawer_string">Close Navigation Drawer</string>
+
     <!-- About Fragment Strings -->
     <string name="about_intro_title">Introduction</string>
     <string name="about_intro_details">
