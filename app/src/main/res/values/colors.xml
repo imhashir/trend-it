@@ -4,4 +4,10 @@
     <color name="colorPrimaryDark">#49ae41</color>
     <color name="colorAccent">#FF4081</color>
     <color name="home_block_outline">#ffffff</color>
+
+    <!-- Albums List Text color -->
+    <color name="default_list_text_color">#000000</color>
+    <color name="default_list_view_background">#ffffff</color>
+    <color name="selected_list_text_color">#381abe</color>
+    <color name="selected_list_view_background">#9c9c9c</color>
 </resources>

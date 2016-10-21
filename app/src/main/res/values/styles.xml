@@ -16,4 +16,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="default_album_list_item">
+        <item name="android:textColor">@color/default_list_text_color</item>
+        <item name="android:background">@color/default_list_view_background</item>
+    </style>
+
+    <style name="selected_album_list_item">
+        <item name="android:textColor">@color/selected_list_text_color</item>
+        <item name="android:background">@color/selected_list_view_background</item>
+    </style>
+
 </resources>

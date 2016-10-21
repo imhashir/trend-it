@@ -9,9 +9,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/navigation_list_ablum_margins"
+        android:padding="@dimen/navigation_list_ablum_margins"
         android:id="@+id/album_name_view"
         tools:text="Album Name"
+        style="@style/default_album_list_item"
         android:textSize="@dimen/navigation_list_ablum_name_size"/>
 
 </LinearLayout>
